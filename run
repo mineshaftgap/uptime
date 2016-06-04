@@ -29,10 +29,10 @@ fi
 
 INSTALLDIR=/usr/local
 
-sudo -- sh -c "if [ -d /usr/local ] && [ -w /usr/local ]; then exit 0; else exit 1; fi"
+sudo -- sh -c "if [ ! -d /usr/local ] || [ ! -w /usr/local ]; then exit 1; fi"
 
 if [ $? -ne 0 ]; then
-  sudo -- sh -c "if [ -d /opt ] && [ -w /opt ]; then exit 0; else exit 1; fi"
+  sudo -- sh -c "if [ ! -d /opt ] || [ ! -w /opt ]; then exit 1; fi"
 
   if [ $? -ne 0 ]; then
     echo "ERROR: Cannot write to /usr/local or /opt"
