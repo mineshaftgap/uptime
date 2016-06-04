@@ -13,7 +13,7 @@ Installing
 ----------
 Clone this git repository:
 ```
-sudo git clone https://github.com/IFSight/docker-uptime.git /usr/local/docker-uptime
+sudo git clone https://github.com/IFSight/uptime.git /usr/local/docker-uptime
 ```
 Run the Docker containers:
 ```
