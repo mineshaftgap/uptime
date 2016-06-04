@@ -42,15 +42,15 @@ else
   sudo git pull
 
   echo "Stopping and removing containers if they exist, then pulling"
-  sudo -- sh -c "$DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml stop"
-  sudo -- sh -c "$DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml rm -f"
-  sudo -- sh -c "$DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml pull"
+  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml stop"
+  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml rm -f"
+  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml pull"
 fi
 
 echo "Starting everything up"
-sudo -- sh -c "$DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml up -d"
+sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml up -d"
 
-sudo -- sh -c "$DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps"
+sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps"
 
 MYIP=$(curl -L raw.ip.ifsight.net)
 echo "To see uptime web GUI, visit http://$MYIP:8082/"
