@@ -28,3 +28,9 @@ sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml p
 ```
 
 Visit the GUI in a web browser at http://yourserver.org:8082/
+
+Configuration
+-------------
+Please see the README.md of the repo that this is built on for further configuration options:
+
+https://github.com/gunmetal313-nodejs/uptime2/blob/master/README.md
