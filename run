@@ -82,6 +82,8 @@ fi
 echo "Starting everything up"
 sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml up -d"
 
+echo
+echo
 sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps"
 
 if [ ! -z $CURL ]; then
@@ -90,4 +92,9 @@ else
   MYIP=$(wget -q -O - raw.ip.ifsight.net)
 fi
 
-echo "To see uptime web interface, visit http://$MYIP:8082/"
+echo
+echo "docker-uptime is now installed, visit the uptime web interface: http://$MYIP:8082/"
+echo
+echo "NOTE: This is a default install that is not password protected."
+echo "Configuration file: $INSTALLDIR/docker-uptime/etc/production.yml"
+echo "Restart command: INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml restart"
