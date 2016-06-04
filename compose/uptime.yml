@@ -1,0 +1,39 @@
+updb:
+  container_name: updb
+  image: fulcrum/uptime
+  restart: always
+  entrypoint: /usr/bin/mongod
+  volumes:
+    - /usr/local/fulcrum/data/uptime2/db:/data/db
+
+upmon:
+  container_name: upmon
+  image: fulcrum/uptime
+  restart: always
+  working_dir: /usr/local/uptime2
+  environment:
+    NODE_ENV: production
+  entrypoint:
+    - node
+    - monitor
+  volumes:
+    - /usr/local/fulcrum/etc/uptime2/production.yml:/usr/local/uptime2/config/production.yml
+  links:
+    - updb
+
+upweb:
+  container_name: upweb
+  image: fulcrum/uptime
+  restart: always
+  working_dir: /usr/local/uptime2
+  environment:
+    NODE_ENV: production
+  entrypoint:
+    - node
+    - app
+  volumes:
+    - /usr/local/fulcrum/etc/uptime2/production.yml:/usr/local/uptime2/config/production.yml
+  links:
+    - updb
+  ports:
+    - "8082:8082"
