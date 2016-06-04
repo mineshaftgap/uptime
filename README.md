@@ -25,13 +25,17 @@ Status
 ------
 Check that the containers are running:
 ```
-sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml ps
+sudo `which docker-compose` --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps
 ```
 
 Visit the GUI in a web browser at http://yourserver.org:8082/ (the curl/run install above will provide your server IP)
 
+NOTE: This is a default install that is not password protected.
+
 Configuration
 -------------
+Configuration file: $INSTALLDIR/docker-uptime/etc/production.yml
+
 Please see the README.md of the repo that this is built on for further configuration options:
 
 https://github.com/gunmetal313-nodejs/uptime2/blob/master/README.md
