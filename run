@@ -40,6 +40,7 @@ else
   sudo git pull
 
   echo "Stopping and removing containers if they exist, then pulling"
+  echo "$DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml stop"
   sudo -- sh -c "$DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml stop"
   sudo -- sh -c "$DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml rm -f"
   sudo -- sh -c "$DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml pull"
