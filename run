@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# clone the repo to /usr/local/docker-uptime
+if [ ! -d /usr/local/docker-uptime ]; then
+  echo "Cloning https://github.com/IFSight/uptime.git"
+
+  sudo git clone https://github.com/IFSight/uptime.git /usr/local/docker-uptime
+else
+  echo "Updating from https://github.com/IFSight/uptime.git"
+
+  cd /usr/local/docker-uptime && sudo git pull
+
+  echo "Stopping and removing containers if they exist, then pulling"
+  sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml stop
+  sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml rm -f
+  sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml pull
+fi
+
+echo "Starting everything up"
+sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml up -d
