@@ -3,15 +3,30 @@
 # set -x
 
 DOCKER=`which docker`
+SUDO=`which sudo`
 
 if [ $? -ne 0 ]; then
-  echo "Docker does not exist on the path, please visit https://docs.docker.com/engine/installation" >&2
+  echo "ERROR: Cannot fine Docker, please visit https://docs.docker.com/engine/installation" >&2
+  exit 1
+fi
+
+if [ $? -ne 0 ]; then
+  echo "ERROR: Cannot find sudo" >&2
   exit 1
 fi
 
 INSTALLDIR=/usr/local
 
-if [[ "$(uname -a)" == *"coreos"* ]]; then
+sudo -- sh -c "if [ -d /usr/local ] && [ -w /usr/local ]; then exit 0; else exit 1; fi"
+
+if [ $? -ne 0 ]; then
+  sudo -- sh -c "if [ -d /opt ] && [ -w /opt ]; then exit 0; else exit 1; fi"
+
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Cannot write to /usr/local or /opt"
+    exit 1
+  fi
+
   INSTALLDIR=/opt
 fi
 
