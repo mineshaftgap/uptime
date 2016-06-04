@@ -4,7 +4,7 @@ updb:
   restart: always
   entrypoint: /usr/bin/mongod
   volumes:
-    - /usr/local/fulcrum/data/uptime2/db:/data/db
+    - /usr/local/docker-uptime/db:/data/db
 
 upmon:
   container_name: upmon
@@ -17,7 +17,7 @@ upmon:
     - node
     - monitor
   volumes:
-    - /usr/local/fulcrum/etc/uptime2/production.yml:/usr/local/uptime2/config/production.yml
+    - /usr/local/docker-uptime/etc/production.yml:/usr/local/uptime2/config/production.yml
   links:
     - updb
 
@@ -32,7 +32,7 @@ upweb:
     - node
     - app
   volumes:
-    - /usr/local/fulcrum/etc/uptime2/production.yml:/usr/local/uptime2/config/production.yml
+    - /usr/local/docker-uptime/etc/production.yml:/usr/local/uptime2/config/production.yml
   links:
     - updb
   ports:
