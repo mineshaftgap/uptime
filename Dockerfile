@@ -8,6 +8,5 @@ RUN echo "Cache bust 201606022102" && \
     git clone git://github.com/gunmetal313-nodejs/uptime2.git /usr/local/uptime2 && \
     cd /usr/local/uptime2 && \
     npm install && \
-    sed 's#[[:space:]]*connectionString:#  connectionString: mongodb://localhost:27017/uptime#' config/default.yaml > config/production.yml && \
     mkdir -p /data/db && \
     apk del build-dependencies
