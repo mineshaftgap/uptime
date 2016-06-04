@@ -3,16 +3,28 @@
 # set -x
 
 DOCKER=`which docker`
-SUDO=`which sudo`
 
 if [ $? -ne 0 ]; then
   echo "ERROR: Cannot fine Docker, please visit https://docs.docker.com/engine/installation" >&2
   exit 1
 fi
 
+SUDO=`which sudo`
+
 if [ $? -ne 0 ]; then
   echo "ERROR: Cannot find sudo" >&2
   exit 1
+fi
+
+CURL=`which curl`
+
+if [ $? -ne 0 ]; then
+  WGET=`which wget`
+
+  if [ $? -ne 0 ]; then
+    echo "ERROR: Cannot find curl or wget" >&2
+    exit 1
+  fi
 fi
 
 INSTALLDIR=/usr/local
@@ -39,7 +51,11 @@ if [ $? -ne 0 ] && [ ! -f $INSTALLDIR/bin/docker-compose ]; then
 
   DOCKER_COMPOSE=$INSTALLDIR/bin/docker-compose
 
-  curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
+  if [ -z $CURL ]; then
+    $CURL -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
+  else
+    $WGET -O - https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
+  fi
 
   sudo chmod +x $DOCKER_COMPOSE
 fi
@@ -67,5 +83,10 @@ sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-
 
 sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps"
 
-MYIP=$(curl -s -L raw.ip.ifsight.net)
-echo "To see uptime web GUI, visit http://$MYIP:8082/"
+if [ -z $CURL ]; then
+  MYIP=$(curl -s -L raw.ip.ifsight.net)
+else
+  MYIP=$(wget -q -O - raw.ip.ifsight.net)
+fi
+
+echo "To see uptime web interface, visit http://$MYIP:8082/"
