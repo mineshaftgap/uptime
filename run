@@ -52,5 +52,5 @@ sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-
 
 sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps"
 
-MYIP=$(curl -L raw.ip.ifsight.net)
+MYIP=$(curl -s -L raw.ip.ifsight.net)
 echo "To see uptime web GUI, visit http://$MYIP:8082/"
