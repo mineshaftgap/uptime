@@ -18,7 +18,7 @@ if [ $? -ne 0 ]; then
 
   curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
 
-  chmod +x $DOCKER_COMPOSE
+  sudo chmod +x $DOCKER_COMPOSE
 fi
 
 # clone the repo to /usr/local/docker-uptime
@@ -29,13 +29,15 @@ if [ ! -d /usr/local/docker-uptime ]; then
 else
   echo "Updating from https://github.com/IFSight/uptime.git"
 
-  cd /usr/local/docker-uptime && sudo git pull
+  cd /usr/local/docker-uptime
+
+  sudo git pull
 
   echo "Stopping and removing containers if they exist, then pulling"
-  $(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml stop)
-  $(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml rm -f)
-  $(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml pull)
+  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml stop
+  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml rm -f
+  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml pull
 fi
 
 echo "Starting everything up"
-$(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml up -d)
+sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml up -d
