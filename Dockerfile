@@ -1,5 +1,4 @@
 FROM alpine:3.4
-MAINTAINER Kenn Herman "kenn@ifsight.com"
 
 RUN echo "Cache bust 201606022102" && \
     echo http://dl-4.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories && \
