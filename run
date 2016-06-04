@@ -1,5 +1,22 @@
 #!/bin/sh
 
+DOCKER=`which docker`
+
+if [ $? -ne 0]; then
+  echo "Docker does not exist on the path, please visit https://docs.docker.com/engine/installation" >&2
+  exit 1
+fi
+
+DOCKER_COMPOSE=`which docker-compose`
+
+if [ $? -ne 0]; then
+  echo "Docker Compose does not exist, getting it"
+
+  curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee /usr/local/bin/docker-compose > /dev/null
+
+  chmod +x /usr/local/bin/docker-compose
+fi
+
 # clone the repo to /usr/local/docker-uptime
 if [ ! -d /usr/local/docker-uptime ]; then
   echo "Cloning https://github.com/IFSight/uptime.git"
@@ -11,10 +28,10 @@ else
   cd /usr/local/docker-uptime && sudo git pull
 
   echo "Stopping and removing containers if they exist, then pulling"
-  sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml stop
-  sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml rm -f
-  sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml pull
+  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml stop
+  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml rm -f
+  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml pull
 fi
 
 echo "Starting everything up"
-sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml up -d
+sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml up -d
