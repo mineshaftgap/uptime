@@ -48,5 +48,7 @@ fi
 echo "Starting everything up"
 sudo -- sh -c "$DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml up -d"
 
+sudo -- sh -c "$DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml ps"
+
 MYIP=$(curl -L raw.ip.ifsight.net)
 echo "To see uptime web GUI, visit http://$MYIP:8082/"
