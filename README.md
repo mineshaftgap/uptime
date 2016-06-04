@@ -11,13 +11,9 @@ The Docker container is based on Alpine Linux 3.4 in order to keep the size as s
 
 Installing
 ----------
-Clone this git repository:
+This will install Docker Compose if it is not found, clone this git repository and run the containers:
 ```
-sudo git clone https://github.com/IFSight/uptime.git /usr/local/docker-uptime
-```
-Run the Docker containers:
-```
-sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml up -d
+curl -L https://github.com/IFSight/uptime/raw/master/run | sudo /bin/sh
 ```
 
 Status
@@ -27,7 +23,7 @@ Check that the containers are running:
 sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml ps
 ```
 
-Visit the GUI in a web browser at http://yourserver.org:8082/
+Visit the GUI in a web browser at http://yourserver.org:8082/ (the curl/run install above will provide your server IP)
 
 Configuration
 -------------
