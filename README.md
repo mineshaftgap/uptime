@@ -13,7 +13,7 @@ Installing
 ----------
 This will install Docker Compose if it is not found, clone this git repository and run the containers:
 ```
-curl -L https://github.com/IFSight/uptime/raw/master/run | sudo /bin/sh
+curl -L https://github.com/IFSight/uptime/raw/master/run | /bin/sh
 ```
 
 Status
