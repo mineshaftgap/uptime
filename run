@@ -17,7 +17,7 @@ fi
 
 DOCKER_COMPOSE=`which docker-compose`
 
-if [ $? -ne 0 ] || [ ! -f $DESTDIR/bin/docker-compose ]; then
+if [ $? -ne 0 ] && [ ! -f $DESTDIR/bin/docker-compose ]; then
   echo "Docker Compose does not exist, getting it"
 
   DOCKER_COMPOSE=$DESTDIR/bin/docker-compose
