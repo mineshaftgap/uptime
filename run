@@ -11,8 +11,14 @@ fi
 
 DOCKER_COMPOSE=`which docker-compose`
 
+DESTDIR=/usr/local
+
+if [[ "$(uname -a)" == *"coreos"* ]]; then
+  DESTDIR=/opt
+fi
+
 if [ $? -ne 0 ]; then
-  DOCKER_COMPOSE=/usr/local/bin/docker-compose
+  DOCKER_COMPOSE=$DESTDIR/bin/docker-compose
 
   echo "Docker Compose does not exist, getting it"
 
@@ -21,26 +27,26 @@ if [ $? -ne 0 ]; then
   sudo chmod +x $DOCKER_COMPOSE
 fi
 
-# clone the repo to /usr/local/docker-uptime
-if [ ! -d /usr/local/docker-uptime ]; then
+# clone the repo to $DESTDIR/docker-uptime
+if [ ! -d $DESTDIR/docker-uptime ]; then
   echo "Cloning https://github.com/IFSight/uptime.git"
 
-  sudo git clone https://github.com/IFSight/uptime.git /usr/local/docker-uptime
+  sudo git clone https://github.com/IFSight/uptime.git $DESTDIR/docker-uptime
 else
   echo "Updating from https://github.com/IFSight/uptime.git"
 
-  cd /usr/local/docker-uptime
+  cd $DESTDIR/docker-uptime
 
   sudo git pull
 
   echo "Stopping and removing containers if they exist, then pulling"
-  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml stop
-  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml rm -f
-  sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml pull
+  sudo $DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml stop
+  sudo $DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml rm -f
+  sudo $DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml pull
 fi
 
 echo "Starting everything up"
-sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml up -d
+sudo $DOCKER_COMPOSE --file $DESTDIR/docker-uptime/compose/uptime.yml up -d
 
 MYIP=$(curl -L raw.ip.ifsight.net)
 echo "To see uptime web GUI, visit http://$MYIP:8082/"
