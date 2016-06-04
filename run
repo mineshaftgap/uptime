@@ -51,7 +51,7 @@ if [ $? -ne 0 ] && [ ! -f $INSTALLDIR/bin/docker-compose ]; then
 
   DOCKER_COMPOSE=$INSTALLDIR/bin/docker-compose
 
-  if [ -z $CURL ]; then
+  if [ ! -z $CURL ]; then
     $CURL -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
   else
     $WGET -O - https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
@@ -64,7 +64,8 @@ fi
 if [ ! -d $INSTALLDIR/docker-uptime ]; then
   echo "Cloning https://github.com/IFSight/uptime.git"
 
-  sudo git clone https://github.com/IFSight/uptime.git $INSTALLDIR/docker-uptime
+  # seen some issues of minimal distros not being able to validate github cert
+  sudo GIT_SSL_NO_VERIFY=true git clone https://github.com/IFSight/uptime.git $INSTALLDIR/docker-uptime
 else
   echo "Updating from https://github.com/IFSight/uptime.git"
 
@@ -83,7 +84,7 @@ sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-
 
 sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps"
 
-if [ -z $CURL ]; then
+if [ ! -z $CURL ]; then
   MYIP=$(curl -s -L raw.ip.ifsight.net)
 else
   MYIP=$(wget -q -O - raw.ip.ifsight.net)
