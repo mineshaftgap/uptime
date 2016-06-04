@@ -30,10 +30,10 @@ else
   cd /usr/local/docker-uptime && sudo git pull
 
   echo "Stopping and removing containers if they exist, then pulling"
-  sudo $($DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml stop)
-  sudo $($DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml rm -f)
-  sudo $($DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml pull)
+  $(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml stop)
+  $(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml rm -f)
+  $(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml pull)
 fi
 
 echo "Starting everything up"
-sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml up -d
+$(sudo $DOCKER_COMPOSE --file /usr/local/docker-uptime/compose/uptime.yml up -d)
