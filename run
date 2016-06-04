@@ -44,20 +44,22 @@ fi
 
 DOCKER_COMPOSE=`which docker-compose`
 
-if [ $? -ne 0 ] && [ ! -f $INSTALLDIR/bin/docker-compose ]; then
-  echo "Docker Compose does not exist, getting it"
-
-  sudo mkdir -p $INSTALLDIR/bin
-
+if [ $? -ne 0 ]; then
   DOCKER_COMPOSE=$INSTALLDIR/bin/docker-compose
 
-  if [ ! -z $CURL ]; then
-    $CURL -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
-  else
-    $WGET -O - https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
-  fi
+  if [ ! -f $DOCKER_COMPOSE ]; then
+    echo "Docker Compose does not exist, getting it"
 
-  sudo chmod +x $DOCKER_COMPOSE
+    sudo mkdir -p $INSTALLDIR/bin
+
+    if [ ! -z $CURL ]; then
+      $CURL -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
+    else
+      $WGET -O - https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
+    fi
+
+    sudo chmod +x $DOCKER_COMPOSE
+  fi
 fi
 
 # clone the repo to $INSTALLDIR/docker-uptime
