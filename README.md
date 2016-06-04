@@ -11,10 +11,15 @@ The Docker container is based on Alpine Linux 3.4 in order to keep the size as s
 
 Installing
 ----------
-This will install Docker Compose if it is not found, clone this git repository and run the containers:
+As long as your Linux server has Docker, it should be able to be installed with one of the following:
 ```
-curl -L https://github.com/IFSight/uptime/raw/master/run | /bin/sh
+curl -L https://github.com/IFSight/uptime/raw/master/run | sh
 ```
+or
+```
+wget -O - https://github.com/IFSight/uptime/raw/master/run | sh
+```
+This will install Docker Compose if it is not found, clone this git repository and run the containers.
 
 Status
 ------
