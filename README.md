@@ -9,14 +9,13 @@ This implementation add on the original work of of Uptime (https://github.com/fz
 
 The Docker container is based on Alpine Linux 3.4 in order to keep the size as small as possible (229mb).
 
-Commands
---------
-1. Pull this git repository:
+Installing
+----------
+Clone this git repository:
 ```
 sudo git clone https://github.com/IFSight/docker-uptime.git /usr/local/docker-uptime
 ```
-
-2. Run the Docker containers:
+Run the Docker containers:
 ```
 sudo `which docker-compose` --file /usr/local/docker-uptime/compose/uptime.yml up -d
 ```
