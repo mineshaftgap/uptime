@@ -20,6 +20,8 @@ DOCKER_COMPOSE=`which docker-compose`
 if [ $? -ne 0 ] && [ ! -f $DESTDIR/bin/docker-compose ]; then
   echo "Docker Compose does not exist, getting it"
 
+  sudo mkdir -p $DESTDIR/bin
+
   DOCKER_COMPOSE=$DESTDIR/bin/docker-compose
 
   curl -L https://github.com/docker/compose/releases/download/1.7.1/docker-compose-`uname -s`-`uname -m` | sudo tee $DOCKER_COMPOSE > /dev/null
