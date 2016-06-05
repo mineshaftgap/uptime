@@ -22,6 +22,8 @@ upweb:
     - updb
   ports:
     - "8082:8082"
+  extra_hosts:
+    - "upweb:127.0.0.1"
 
 upmon:
   container_name: upmon
