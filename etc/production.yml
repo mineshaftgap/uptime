@@ -19,7 +19,7 @@ analyzer:
   qosAggregationInterval: 600000     # ten minutes
   pingHistory:            8035200000 # three months
 
-autoStartMonitor: true
+autoStartMonitor: false
 
 plugins:
   - ./plugins/console
