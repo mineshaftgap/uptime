@@ -6,21 +6,6 @@ updb:
   volumes:
     - $INSTALLDIR/docker-uptime/db:/data/db
 
-upmon:
-  container_name: upmon
-  image: fulcrum/uptime
-  restart: always
-  working_dir: /usr/local/uptime2
-  environment:
-    NODE_ENV: production
-  entrypoint:
-    - node
-    - monitor
-  volumes:
-    - $INSTALLDIR/docker-uptime/etc/production.yml:/usr/local/uptime2/config/production.yml
-  links:
-    - updb
-
 upweb:
   container_name: upweb
   image: fulcrum/uptime
@@ -37,3 +22,19 @@ upweb:
     - updb
   ports:
     - "8082:8082"
+
+upmon:
+  container_name: upmon
+  image: fulcrum/uptime
+  restart: always
+  working_dir: /usr/local/uptime2
+  environment:
+    NODE_ENV: production
+  entrypoint:
+    - node
+    - monitor
+  volumes:
+    - $INSTALLDIR/docker-uptime/etc/production.yml:/usr/local/uptime2/config/production.yml
+  links:
+    - updb
+    - upweb
