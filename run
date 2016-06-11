@@ -105,8 +105,12 @@ else
 fi
 
 echo
-echo "docker-uptime is now installed, visit the uptime web interface: http://$MYIP:8082/"
+echo "docker-uptime is now installed, visit the uptime web interface: http://uptime:givemestats@$MYIP:8082/"
 echo
-echo "NOTE: This is a default install that is not password protected."
+echo "NOTE: This is a default install, it is password protected"
+echo " username: uptime"
+echo " password: givemestats"
+echo
 echo "Configuration file: $INSTALLDIR/docker-uptime/production.yml"
+echo
 echo "Restart command: INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/docker-compose.yml restart"
