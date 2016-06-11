@@ -17,7 +17,7 @@ upweb:
     - node
     - app
   volumes:
-    - $INSTALLDIR/docker-uptime/etc/production.yml:/usr/local/uptime2/config/production.yml
+    - $INSTALLDIR/docker-uptime/production.yml:/usr/local/uptime2/config/production.yml
   links:
     - updb
   ports:
@@ -36,7 +36,7 @@ upmon:
     - node
     - monitor
   volumes:
-    - $INSTALLDIR/docker-uptime/etc/production.yml:/usr/local/uptime2/config/production.yml
+    - $INSTALLDIR/docker-uptime/production.yml:/usr/local/uptime2/config/production.yml
   links:
     - updb
     - upweb
