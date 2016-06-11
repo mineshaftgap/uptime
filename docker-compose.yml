@@ -18,6 +18,7 @@ upweb:
     - app
   volumes:
     - $INSTALLDIR/docker-uptime/production.yml:/usr/local/uptime2/config/production.yml
+    - $INSTALLDIR/docker-uptime/plugins/email2:/usr/local/uptime2/plugins/email2
   links:
     - updb
   ports:
@@ -37,6 +38,7 @@ upmon:
     - monitor
   volumes:
     - $INSTALLDIR/docker-uptime/production.yml:/usr/local/uptime2/config/production.yml
+    - $INSTALLDIR/docker-uptime/plugins/email2:/usr/local/uptime2/plugins/email2
   links:
     - updb
     - upweb
