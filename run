@@ -27,6 +27,13 @@ if [ $? -ne 0 ]; then
   fi
 fi
 
+GIT=`which git`
+
+if [ $? -ne 0 ]; then
+  echo "ERROR: Cannot find git" >&2
+  exit 1
+fi
+
 INSTALLDIR=/usr/local
 
 sudo -- sh -c "if [ ! -d /usr/local ] || [ ! -w /usr/local ]; then exit 1; fi"
@@ -67,29 +74,29 @@ if [ ! -d $INSTALLDIR/docker-uptime ]; then
   echo "Cloning https://github.com/IFSight/uptime.git"
 
   # seen some issues of minimal distros not being able to validate github cert
-  sudo GIT_SSL_NO_VERIFY=true git clone https://github.com/IFSight/uptime.git $INSTALLDIR/docker-uptime
+  sudo GIT_SSL_NO_VERIFY=true $GIT clone https://github.com/IFSight/uptime.git $INSTALLDIR/docker-uptime
 else
   echo "Updating from https://github.com/IFSight/uptime.git"
 
   cd $INSTALLDIR/docker-uptime
 
   # some minimal Linux installs don't have the proper certs
-  sudo git config --global http.sslVerify false
+  sudo $GIT config --global http.sslVerify false
   
-  sudo git pull
+  sudo $GIT pull
 
   echo "Stopping and removing containers if they exist, then pulling"
-  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml stop"
-  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml rm -f"
-  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml pull"
+  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/docker-compose.yml stop"
+  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/docker-compose.yml rm -f"
+  sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/docker-compose.yml pull"
 fi
 
 echo "Starting everything up"
-sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml up -d"
+sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/docker-compose.yml up -d"
 
 echo
 echo
-sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml ps"
+sudo -- sh -c "INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/docker-compose.yml ps"
 
 if [ ! -z $CURL ]; then
   MYIP=$(curl -s -L raw.ip.ifsight.net)
@@ -101,5 +108,5 @@ echo
 echo "docker-uptime is now installed, visit the uptime web interface: http://$MYIP:8082/"
 echo
 echo "NOTE: This is a default install that is not password protected."
-echo "Configuration file: $INSTALLDIR/docker-uptime/etc/production.yml"
-echo "Restart command: INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/compose/uptime.yml restart"
+echo "Configuration file: $INSTALLDIR/docker-uptime/production.yml"
+echo "Restart command: INSTALLDIR=$INSTALLDIR $DOCKER_COMPOSE --file $INSTALLDIR/docker-uptime/docker-compose.yml restart"
