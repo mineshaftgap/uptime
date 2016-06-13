@@ -49,7 +49,7 @@ email:
 basicAuth:
   username:    uptime
   password:    givemestats
-#verbose: false # only used in dev
+verbose: false # only used in dev
 
 webPageTest:
   server: 'http://www.webpagetest.org'
