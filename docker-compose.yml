@@ -4,6 +4,7 @@ updb:
   restart: always
   entrypoint: /usr/bin/mongod
   volumes:
+    - /etc/localtime:/etc/localtime
     - $INSTALLDIR/docker-uptime/db:/data/db
 
 upweb:
@@ -17,6 +18,7 @@ upweb:
     - node
     - app
   volumes:
+    - /etc/localtime:/etc/localtime
     - $INSTALLDIR/docker-uptime/production.yml:/usr/local/uptime2/config/production.yml
   links:
     - updb
@@ -36,6 +38,7 @@ upmon:
     - node
     - monitor
   volumes:
+    - /etc/localtime:/etc/localtime
     - $INSTALLDIR/docker-uptime/production.yml:/usr/local/uptime2/config/production.yml
   links:
     - updb
